@@ -11,8 +11,12 @@
       </div>
       <div class="collapse navbar-collapse" id="navbarEexample1">
         <ul class ="nav navbar-nav navbar-right">
-          <li class="active"><a href="#">about</a></li>
-          <li><a href="#">Login</a></li>
+          <% if logged_in? %>
+            <li class="active"><a href="#">about</a></li>
+            <li><%= link_to "Log out", logout_path, method: :delete %></li>
+          <% else %>
+            <li><a href="#">Login</a></li>
+          <% end %>
         </ul>
       </div>
     </div>
