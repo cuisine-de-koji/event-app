@@ -1,0 +1,22 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top-container {
+  background-image: url("/top.jpg");
+  width: 100%;
+  height: 750px;
+  text-align: center;
+
+}
+
+.top-container-title {
+  text-align: center;
+  padding-top: 120px;
+
+}
+
+.top-container-buttons {
+  display: inline-block;
+  padding-top: 30px;
+}
