@@ -1,4 +1,12 @@
 <h1><%= @user.name %></h1>
+
+<div>
+  <% if Relationship.find_by(follower_id: session[:user_id], followed_id: @user.id) %>
+    <%= link_to "フォロー済み", "/relationships/#{params[:id]}", method: :delete %>
+  <% else %>
+    <%= link_to "フォローする", "/relationships/#{params[:id]}", method: :post %>
+  <% end %>
+</div>
 <div><%= link_to "Add Schedule", "/meetings/new" %></div>
 
 <%= month_calendar(events: @meetings) do |date, meetings| %>
