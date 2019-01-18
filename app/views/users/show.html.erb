@@ -1,10 +1,15 @@
+<h1><%= @user.name %></h1>
 <div><%= link_to "Add Schedule", "/meetings/new" %></div>
 
 <%= month_calendar(events: @meetings) do |date, meetings| %>
   <%= date.day %>
   <% meetings.each do |meeting| %>
     <div>
-      <%= meeting.name %>
+      <% if meeting.userid == session[:user_id]%>
+	      <%= link_to meeting.name, "/meetings/#{meeting.id}" %>
+	    <% else %>
+        <%= meeting.name %>
+      <% end %>
       <%= meeting.userid %>
     </div>
   <% end %>
