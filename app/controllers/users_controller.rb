@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+
+  def index
+	    @user = User.all
+    end
+
   def new
 	    @user = User.new
   end
@@ -14,8 +19,9 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-\
+
   def show
+    @user = User.find_by(id: params[:id])
     ##dupメソッドにてコピーを作成（arrayクラスに変換すると、freeze=trueとなっており、pushメソッドが使用できない）
     @meetings = Meeting.where(userid: params[:id]).to_ary().dup()
 
