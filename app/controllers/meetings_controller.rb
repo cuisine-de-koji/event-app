@@ -15,7 +15,7 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @meeting = Meeting.new
-    @user = User.find(session[:user_id])
+    @user = User.find(@current_user.id)
   end
 
   # GET /meetings/1/edit

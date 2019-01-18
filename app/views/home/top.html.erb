@@ -5,8 +5,10 @@
   </div>
   <div class="top-container-buttons">
       <div class="btn-toolbar center-block">
+        <% if !@current_user %>
           <%= link_to "新規登録", new_user_path, class: "btn btn-lg btn-info" %>
           <%= link_to "ログイン", login_path, class: "btn btn-lg btn-success" %>
+        <% end %>
       </div>
   </div>
 </div>
