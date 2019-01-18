@@ -21,6 +21,10 @@
     <%= form.datetime_select :start_time %>
   </div>
 
+  <div class="field">
+    <%= form.hidden_field :userid, :value => session[:user_id] %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
