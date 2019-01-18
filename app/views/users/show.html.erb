@@ -4,7 +4,11 @@
   <%= date.day %>
   <% meetings.each do |meeting| %>
     <div>
-      <%= meeting.name %>
+      <% if meeting.userid == session[:user_id]%>
+	      <%= link_to meeting.name, "/meetings/#{meeting.id}" %>
+	    <% else %>
+        <%= meeting.name %>
+      <% end %>
       <%= meeting.userid %>
     </div>
   <% end %>
