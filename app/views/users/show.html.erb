@@ -9,7 +9,9 @@
     <%= link_to "フォローする", "/relationships/#{params[:id]}", method: :post %>
   <% end %>
 </div>
-<div><%= link_to "Add Schedule", "/meetings/new" %></div>
+<% if @current_user.id == params[:id].to_i %>
+  <div><%= link_to "Add Schedule", "/meetings/new" %></div>
+<% end %>
 
 <%= month_calendar(events: @meetings) do |date, meetings| %>
   <%= date.day %>
