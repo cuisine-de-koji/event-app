@@ -4,9 +4,13 @@
       <p>Registration Your Schedule</p>
   </div>
   <div class="top-container-buttons">
-      <div class="btn-toolbar center-block">
-          <%= link_to "新規登録", new_user_path, class: "btn btn-lg btn-info" %>
-          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-success" %>
-      </div>
+    <div class="btn-toolbar center-block">
+    <% if !@current_user %>
+        <%= link_to "新規登録", new_user_path, class: "btn btn-lg btn-info" %>
+        <%= link_to "ログイン", login_path, class: "btn btn-lg btn-success" %>
+    <% end %>
+    </div>
+    <div>ログイン用ID: test@test.com  </div>
+    <div>ログイン用PASS: test  </div>
   </div>
 </div>

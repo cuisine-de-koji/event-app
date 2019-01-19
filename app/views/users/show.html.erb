@@ -1,16 +1,27 @@
 <h1><%= @user.name %></h1>
-<div><%= link_to "Add Schedule", "/meetings/new" %></div>
+
+<div>
+  <% if Relationship.find_by(follower_id: @current_user.id, followed_id: @user.id) %>
+    <%= link_to "フォロー済み", "/relationships/#{params[:id]}", method: :delete %>
+  <% elsif @current_user.id == @user.id%>
+
+  <% else %>
+    <%= link_to "フォローする", "/relationships/#{params[:id]}", method: :post %>
+  <% end %>
+</div>
+<% if @current_user.id == params[:id].to_i %>
+  <div><%= link_to "Add Schedule", "/meetings/new" %></div>
+<% end %>
 
 <%= month_calendar(events: @meetings) do |date, meetings| %>
   <%= date.day %>
   <% meetings.each do |meeting| %>
     <div>
-      <% if meeting.userid == session[:user_id]%>
+      <% if meeting.userid == @current_user.id %>
 	      <%= link_to meeting.name, "/meetings/#{meeting.id}" %>
 	    <% else %>
         <%= meeting.name %>
       <% end %>
-      <%= meeting.userid %>
     </div>
   <% end %>
 <% end %>
