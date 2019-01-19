@@ -1,5 +1,6 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /meetings
   # GET /meetings.json
@@ -57,7 +58,7 @@ class MeetingsController < ApplicationController
   def destroy
     @meeting.destroy
     respond_to do |format|
-      format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
+      format.html { redirect_to user_path(@current_user.id), notice: 'Meeting was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,5 +72,13 @@ class MeetingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
       params.require(:meeting).permit(:name, :start_time, :userid)
+    end
+
+    def ensure_correct_user
+      @meeting = Meeting.find_by(id: params[:id])
+      if @meeting.user_id != @current_user.id
+        flash[:notice] = "権限がありません"
+        redirect_to("/posts/index")
+      end
     end
 end

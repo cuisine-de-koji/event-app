@@ -1,4 +1,6 @@
 class RelationshipsController < ApplicationController
+  before_action :authenticate_user
+
   def create
     relatinoship = Relationship.new(follower_id: @current_user.id, followed_id: params[:id])
     relatinoship.save
