@@ -23,24 +23,20 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    ##dupメソッドにてコピーを作成（arrayクラスに変換すると、freeze=trueとなっており、pushメソッドが使用できない）
     @meetings = Meeting.where(userid: params[:id]).to_ary().dup()
 
-    users_myfollowing = Relationship.where(follower_id: @current_user.id)
-    users_ifollowed = Relationship.where(followed_id: @current_user.id)
+    if @user.id == @current_user.id
 
-    users_myfollowing.each do |myfollowing|
-	    relation = users_ifollowed.find_by(follower_id: myfollowing.followed_id)
-      if relation
-        tmp = Meeting.where(userid: relation.follower_id).to_ary()
-        #↑相互フォローユーザのMeeting取得時に、本人のMeetingを取得しないようにコントロールが必要
+      relationships_each(@current_user.id).each do |relation|
+        tmp = Meeting.where(userid: relation, hidden: false).to_ary
 
-        tmp.each do |record|
-          @meetings.push(record)
-        end
+          tmp.each do |record|
+            @meetings.push(record)
+          end
       end
+
     end
-    @meetings
+
   end
 
 
@@ -48,6 +44,13 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password)
+
+    end
+
+    def relationships_each(userid)
+
+      relationships_follower = Relationship.where(follower_id: userid).pluck(:followed_id)
+      Relationship.where(followed_id: userid).where(follower_id: relationships_follower).pluck(:follower_id)
 
     end
 
