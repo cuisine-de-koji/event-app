@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def new
-	  @user = User.new
+	  # @user = User.new
   end
 
   def create
@@ -26,11 +26,11 @@ class UsersController < ApplicationController
     ##dupメソッドにてコピーを作成（arrayクラスに変換すると、freeze=trueとなっており、pushメソッドが使用できない）
     @meetings = Meeting.where(userid: params[:id]).to_ary().dup()
 
-    users_following = Relationship.where(follower_id: @current_user.id)
-    users_followed = Relationship.where(followed_id: @current_user.id)
+    users_myfollowing = Relationship.where(follower_id: @current_user.id)
+    users_ifollowed = Relationship.where(followed_id: @current_user.id)
 
-    users_following.each do |user|
-	    relation = users_followed.find_by(follower_id: user.followed_id)
+    users_myfollowing.each do |myfollowing|
+	    relation = users_ifollowed.find_by(follower_id: myfollowing.followed_id)
       if relation
         tmp = Meeting.where(userid: relation.follower_id).to_ary()
         #↑相互フォローユーザのMeeting取得時に、本人のMeetingを取得しないようにコントロールが必要
@@ -40,6 +40,7 @@ class UsersController < ApplicationController
         end
       end
     end
+    @meetings
   end
 
 
