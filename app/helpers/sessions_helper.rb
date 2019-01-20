@@ -9,7 +9,6 @@ module SessionsHelper
   end
 
   def logged_in?
-
     @errors = session[:user_id]
     return !session[:user_id].nil?
   end

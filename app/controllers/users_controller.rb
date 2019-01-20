@@ -1,11 +1,18 @@
 class UsersController < ApplicationController
 
   def index
-	  @users = User.all
+    @users = User.all
+
+    relationships_follower = Relationship.where(follower_id: @current_user.id).pluck(:followed_id)
+    relationships_followed = Relationship.where(followed_id: @current_user.id).pluck(:follower_id)
+
+    @follower = User.where(id: relationships_follower)
+    @followed = User.where(id: relationships_followed)
+
   end
 
   def new
-	  # @user = User.new
+	  @user = User.new
   end
 
   def create
