@@ -1,10 +1,51 @@
-<div>
-	<h2>ユーザー一覧</h2>
-  <% @users.each do |user| %>
-    <div>
-      <%#= "name: #{user.name}     email:#{user.email}" %>
-      ユーザー名：
-      <%= link_to( user.name, "users/#{user.id}") %>
+<!-- タブボタン部分 -->
+
+
+
+<div class='index-container'>
+  <div class="p-3">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a href="#tab1" class="nav-link" data-toggle="tab">ユーザー一覧</a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab2" class="nav-link" data-toggle="tab">フォロー</a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab3" class="nav-link" data-toggle="tab">フォロワー</a>
+      </li>
+    </ul>
+
+
+
+  </div>
+
+  <!--タブのコンテンツ部分-->
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane active">
+      <% @users.each do |user| %>
+        <div class='user'>
+            <%= link_to( user.name, "users/#{user.id}") %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    <div id="tab2" class="tab-pane">
+      <% @follower.each do |user| %>
+        <div class='user'>
+            <%= link_to( user.name, "users/#{user.id}") %>
+        </div>
+      <% end %>
+    </div>
+    <div id="tab3" class="tab-pane">
+      <% @followed.each do |user| %>
+        <div class='user'>
+            <%= link_to(user.name, "users/#{user.id}") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+
 </div>
